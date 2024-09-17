@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import QuestionCard from './components/QuestionCard';
 import { Category, Difficulty, fetchQuizQuestions, QuestionState } from './components/API';
 import { GlobalStyle, Wrapper } from './App.styles';
@@ -97,7 +97,7 @@ function App() {
       <Wrapper>
         <h1>QUIZ APP</h1>
         {
-          gameOver || userAnswers.length === totalQuestions ? (
+          gameOver ? (
             <div className='options'>
               <select className='start select' onChange={handleChange}>
                 <option value={10}>10</option>
@@ -119,7 +119,7 @@ function App() {
           ) : null}
         {!gameOver ? <p className='score'>Score : {score}</p> : null}
         {loading && <p>Loading Questions......</p>}
-        {!loading && !gameOver && <QuestionCard
+        {!gameOver && !loading && <QuestionCard
           questionNo={number + 1}
           totalQuestions={totalQuestions}
           question={questions[number].question}
@@ -129,6 +129,9 @@ function App() {
         />}
         {!gameOver && !loading && userAnswers.length === number + 1 && number !== totalQuestions - 1 ? (
           <button className='next' onClick={nextQuestion}> Next </button>
+        ) : null}
+        {!gameOver && !loading && userAnswers.length === number + 1 && number === totalQuestions - 1 ? (
+          <button className='next' onClick={nextQuestion}> Finish </button>
         ) : null}
       </Wrapper>
     </>
